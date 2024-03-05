@@ -3,6 +3,7 @@ const dbcon = require('../connection');
 
 const checkUserName = function (username) {
     return new Promise((resolve,reject)=>{
+        console.log(username);
     dbcon.getConnection(async (err, con) => {
         if (err){
             con.release();
