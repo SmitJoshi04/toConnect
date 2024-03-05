@@ -36,7 +36,7 @@ const getUserPost = async function (req, res) {
                 return res.send(err);
             }
             console.log("resultof user data::",result);
-            response.push(result);
+            response= result;
             console.log("response of user data:::",response);
         })
     
