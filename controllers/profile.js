@@ -22,7 +22,8 @@ const getUserPost = async function (req, res) {
 
     var getPostArray = [];
     let user = req.user;
-    console.log(user);
+    
+    console.log("req.user ::: ",user);
     const query = `select * from user where u_id= ${user.userId}`
     dbcon.getConnection((err,con)=>{
         if (err){

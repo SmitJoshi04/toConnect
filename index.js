@@ -35,7 +35,7 @@ app.use('/user/post', postRoute);
 app.use('/user/friend', friendRoute);
 app.use('/user/conversation', chatRoute);
 app.use('/region',regionRoute);
-app.use('/profile',profileRoute);
+app.use('/user/profile',profileRoute);
 
 if(io)
 {
