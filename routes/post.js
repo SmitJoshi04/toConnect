@@ -17,7 +17,7 @@ const upload = multer({storage:storage})
 
 
 router.post('/', verifyToken,upload.single('file'), userPost)
-router.get('/', getUserPost)
+router.get('/', verifyToken ,getUserPost)
 router.delete('/', verifyToken, deletePost)
 
 router.post('/comments', verifyToken, userComment)
