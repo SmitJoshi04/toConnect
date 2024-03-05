@@ -22,7 +22,7 @@ const userSignup = async function (req, res) {
     dbcon.getConnection(async (err, con) => {
         if (err)
             return console.log(err);
-        // console.log(con);
+        console.log("file.path",file.path);
         con.query(`INSERT INTO user (fname, lname, username, email, password, pnumber, dob, gender, profile, city_id) VALUES ('${body.fname}', '${body.lname}', '${body.username}', '${body.email}', '${hashPassword}', ${body.phonenumber}, '${body.dob}', '${body.gender}', '${file.path}', ${body.city})`, (err, result) => {
             // console.log(this.sql);
             if (err) {
@@ -69,7 +69,7 @@ const userSignup = async function (req, res) {
 
 
 const userLogin = async function (req, res) {
-    console.log("req:::", req);
+    // console.log("req:::", req);
     let body = req.body;
     console.log("body:::", body);
     if (!body.userName && !body.password)
