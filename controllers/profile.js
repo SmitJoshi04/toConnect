@@ -125,7 +125,7 @@ const getUserPost = async function (req, res) {
             // res.send(getPostArray);
             console.log("getPostArray", getPostArray);
             response.push(getPostArray);
-            console.log("whole response:::",getPostArray);
+            console.log("whole response:::",response);
             con.release();
             res.json(response);
         })
