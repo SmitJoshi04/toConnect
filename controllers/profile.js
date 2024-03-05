@@ -134,9 +134,5 @@ const getUserPost = async function (req, res) {
     })
 }
 
-const getUserData = (req,res)=>{
-    
-}
 
-
-module.exports = {getUserPost,getUserData};
+module.exports = {getUserPost};
