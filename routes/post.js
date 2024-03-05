@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { userPost, userComment, userLike, deletePost, deleteComments, updateComments } = require('../controllers/post')
+const { userPost, userComment, userLike, deletePost, deleteComments, updateComments, getUserPost } = require('../controllers/post')
 const { verifyToken } = require('../middlewares/user')
 const multer = require('multer');
 
@@ -17,6 +17,7 @@ const upload = multer({storage:storage})
 
 
 router.post('/', verifyToken,upload.single('file'), userPost)
+router.get('/', getUserPost)
 router.delete('/', verifyToken, deletePost)
 
 router.post('/comments', verifyToken, userComment)
