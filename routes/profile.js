@@ -1,8 +1,8 @@
 const express = require('express');
-const {getPosts} = require('../controllers/profile')
+const {getUserPost,getUserData} = require('../controllers/profile')
 
 const router = express.Router();
 
-router.post('/',getPosts);
+router.post('/',getUserPost);
 
 module.exports = router;
