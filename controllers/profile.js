@@ -22,10 +22,10 @@ const getUserPost = async function (req, res) {
 
     var getPostArray = [];
     let user = req.user;
-    
+    let response=[];
     console.log("req.user ::: ",user);
     const query = `select * from user where u_id= ${user.userId}`
-    dbcon.getConnection((err,con)=>{
+    await dbcon.getConnection((err,con)=>{
         if (err){
             con.release()
             return res.send(err);
@@ -35,19 +35,17 @@ const getUserPost = async function (req, res) {
                 con.release()
                 return res.send(err);
             }
-
-        
-            // res.json(result);
+            console.log("resultof user data::",result);
+            response.push(result);
+            console.log("response of user data:::",response);
         })
-    })
+    
     
     // const userId = req.user.userId
 
     // console.log("userid :: ", userId);
 
-    await dbcon.getConnection((err, con) => {
-        if (err)
-            return console.error(err);
+    
         con.query(`SELECT * FROM post WHERE u_id =?`, [user.userId], async (err, result) => {
             if (err)
                 console.error(err);
@@ -59,7 +57,6 @@ const getUserPost = async function (req, res) {
             async function getCommentsToPost(post_id) {
                 return new Promise((resolve, reject) => {
                     console.log("::::::::::::::::::::", post_id);
-
                      con.query(`SELECT * FROM comments WHERE post_id=?`, [post_id], (err2, resultComment) => {
                         console.log("::::::::::::::::::::");
                         if (err2)
@@ -125,12 +122,12 @@ const getUserPost = async function (req, res) {
                 console.log("getPostArray", getPostArray);
 
             }
-            res.send(getPostArray);
-
+            // res.send(getPostArray);
             console.log("getPostArray", getPostArray);
-
+            response.push(getPostArray);
+            console.log("whole response:::",getPostArray);
             con.release();
-
+            res.json(response);
         })
     })
 }
