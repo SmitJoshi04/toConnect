@@ -16,8 +16,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 
-router.post('/', verifyToken,upload.single('file'), userPost)
-router.get('/', verifyToken ,getUserPost)
+router.post('/create', verifyToken,upload.single('file'), userPost)
+router.post('/', verifyToken ,getUserPost)
 router.delete('/', verifyToken, deletePost)
 
 router.post('/comments', verifyToken, userComment)
