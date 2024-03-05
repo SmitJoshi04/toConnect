@@ -2,7 +2,6 @@ const dbcon = require('../connection')
 const { } = require('../utility/user')
 
 const userPost = async function (req, res) {
-
     var body = req.body;
     const userId = req.user.userId
     let file = req.file;
@@ -10,25 +9,17 @@ const userPost = async function (req, res) {
     await dbcon.getConnection((err, con) => {
         if (err)
             return res.send(err)
-        con.query(`INSERT INTO post (u_id, post_text) VALUES (${userId} , '${body.post_text}')`, (err, result) => {
+        con.query(`INSERT INTO post (u_id, post_text,photo_path) VALUES (${userId} , '${body.post_text}', '${file.path}')`, (err, result) => {
             if (err){
                 con.release()
                 return res.send(err);
             }
             console.log("result:::",result);
-            con.query(`INSERT INTO post (post_id,photo_path) VALUES ('${result.insertId}' , '${file.path}')`,(err,result2)=>{
-                if (err){
-                    con.release()
-                    return res.send(err);
-                }
-                console.log("result2:::",result2);
-            })
             res.send(result)
             con.release();
         })
 
     })
-
 }
 
 const getUserPost = async function (req, res) {
