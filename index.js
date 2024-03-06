@@ -28,6 +28,7 @@ const io =  new Server(http, {
         connectionStateRecovery: {},
         // adapter: createAdapter()
       });
+app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use('/user', userRoute);
