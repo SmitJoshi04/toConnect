@@ -2,6 +2,7 @@ const dbcon = require('../connection')
 const { } = require('../utility/user')
 
 const userPost = async function (req, res) {
+    console.log("user post function sudhi pahoche chhe");
     var body = req.body;
     const userId = req.user.userId
     let file = req.file;
@@ -9,7 +10,7 @@ const userPost = async function (req, res) {
     await dbcon.getConnection((err, con) => {
         if (err)
             return res.send(err)
-        con.query(`INSERT INTO post (u_id, post_text,photo_path) VALUES (${userId} , '${body.post_text}', '${file.path}')`, (err, result) => {
+        con.query(`INSERT INTO post (u_id, post_text,photo_path) VALUES (${userId} , '${body.post_text}', '${file.filename}')`, (err, result) => {
             if (err){
                 con.release()
                 return res.send(err);
