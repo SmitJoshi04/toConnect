@@ -97,7 +97,27 @@ const home = function (req, res) {
     console.log(Data.decodeToken.userId);
 }
 
+const userData = function(req,res){
+    let userId = req.user.userId;
+    console.log(userId);
+    const query = 'select u.city_id,u.fname,u.lname,u.pnumber,u.dob,u.gender,u.user_type,u.profile,c1.Cname,c2.country_name,s.state_name from user u,cities c1,countries c2,states s where u.u_id = ? && u.city_id = c1.city_id && c1.state_id = s.state_id && s.country_id = c2.country_id';
+    dbcon.getConnection((err,con)=>{
+        if(err){
+            con.release();
+        return console.log(err);
+        }
+        con.query(query,[userId],(err,result)=>{
+            if(err){
+                con.release();
+            return console.log(err);
+            }
+            console.log("user data in edit:::",result);
+            res.json(result);
+        })
+    })
+}
 
 
-module.exports = { userSignup, userLogin, home };
+
+module.exports = { userSignup, userLogin, home,userData };
 
