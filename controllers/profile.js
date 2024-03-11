@@ -77,8 +77,7 @@ const getUserPost = async function (req, res) {
 
             for (let i = 0; i < result.length; i++) {
                 const element = result[i];
-                commentLike = [];
-                commentResult = [];
+                
 
                 // result[i].post = result[i];
 

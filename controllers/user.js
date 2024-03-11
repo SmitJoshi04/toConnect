@@ -137,7 +137,7 @@ const editData= async function(req,res){
             return console.log(err);
             }
             console.log("user data in edit:::",result);
-            res.status(200).json({ msg: 'user succesfully updated' })
+            res.status(200).json({ msg: 'user succesfully updated' }) 
         })
     })
 }

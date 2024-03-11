@@ -5,7 +5,8 @@ const postRoute = require('./routes/post');
 const friendRoute = require('./routes/friend');
 const chatRoute = require('./routes/chat');
 const regionRoute = require('./routes/region');
-const profileRoute = require('./routes/profile')
+const profileRoute = require('./routes/profile');
+const homeRoute = require('./routes/home');
 
 const {webSocketConnect} = require('./io')
 
@@ -37,6 +38,7 @@ app.use('/user/friend', friendRoute);
 app.use('/user/conversation', chatRoute);
 app.use('/region',regionRoute);
 app.use('/user/profile',profileRoute);
+app.use('/home',homeRoute)
 
 if(io)
 {
