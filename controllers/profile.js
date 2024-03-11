@@ -2,11 +2,11 @@ const dbcon = require("../connection");
 
 const getUserProfileData = async function (req,res){
     let user = req.user;
-    console.log(user);
+    console.log("user",user);
     const query = `select * from user where u_id= ${user.userId}`
     await dbcon.getConnection((err, con) => {
         if (err) {
-            con.release()
+            con.release();
             return res.send(err);
         }
         con.query(query, (err, result) => {
@@ -148,4 +148,35 @@ const getUserFriend = async function (req, res) {
     })
 }
 
-module.exports = { getUserPost, getUserFriend, getUserProfileData };
+const editProfilePicture = async function(req,res){
+
+let user= req.user;
+console.log("user:::",user);
+let file = req.file;
+console.log("file:::",file);
+
+const query = `UPDATE user SET profile =? WHERE u_id =?`
+await dbcon.getConnection((err, con) => {
+    if (err) {
+        con.release()
+        return res.send(err);
+    }
+    con.query(query,[file.filename, user.userId], (err, result) => {
+        if (err) {
+            con.release()
+            return res.send(err);
+        }
+        res.send(result);
+        con.release();
+        console.log("result of updated profile data::", result);
+        // response = result;
+        // console.log("response of user data:::", response);
+    })
+
+}) 
+
+
+}
+
+
+module.exports = { getUserPost, getUserFriend, getUserProfileData,editProfilePicture };
