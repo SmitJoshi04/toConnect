@@ -22,8 +22,8 @@ const userSignup = async function (req, res) {
     dbcon.getConnection(async (err, con) => {
         if (err)
             return console.log(err);
-        console.log("file.path",file.path);
-        con.query(`INSERT INTO user (fname, lname, username, email, password, pnumber, dob, gender, profile, city_id) VALUES ('${body.fname}', '${body.lname}', '${body.username}', '${body.email}', '${hashPassword}', ${body.phonenumber}, '${body.dob}', '${body.gender}', '${file.path}', ${body.city})`, (err, result) => {
+        console.log("file.path",file.filename);
+        con.query(`INSERT INTO user (fname, lname, username, email, password, pnumber, dob, gender, profile, city_id) VALUES ('${body.fname}', '${body.lname}', '${body.username}', '${body.email}', '${hashPassword}', ${body.phonenumber}, '${body.dob}', '${body.gender}', '${file.filename}', ${body.city})`, (err, result) => {
             // console.log(this.sql);
             if (err) {
                 
@@ -84,7 +84,7 @@ const userLogin = async function (req, res) {
     const user = {
         userId: userName[0].u_id,
     }
-    const jwtToken = jwt.sign(user, secretKey)
+    const jwtToken = await jwt.sign(user, secretKey)
     // res.send("login Successfully");
     console.log(jwtToken);
 
@@ -97,7 +97,51 @@ const home = function (req, res) {
     console.log(Data.decodeToken.userId);
 }
 
+const userData = function(req,res){
+    let userId = req.user.userId;
+    console.log(userId);
+    const query = 'select u.city_id,u.username,u.fname,u.lname,u.pnumber,u.dob,u.gender,u.user_type,u.profile,c1.Cname,c2.country_name,s.state_name from user u,cities c1,countries c2,states s where u.u_id = ? && u.city_id = c1.city_id && c1.state_id = s.state_id && s.country_id = c2.country_id';
+    dbcon.getConnection((err,con)=>{
+        if(err){
+            con.release();
+        return console.log(err);
+        }
+        con.query(query,[userId],(err,result)=>{
+            if(err){
+                con.release();
+            return console.log(err);
+            }
+            console.log("user data in edit:::",result);
+            res.json(result);
+        })
+    })
+}
+const editData= async function(req,res){
+    var body = req.body;
+    console.log("body:::",body);
+    console.log(req.file);
+    let file = req.file;
+    console.log("file::", file);
+    let userId = req.user.userId;
+    console.log(userId);
+    const filename = file ? file.filename : body.file;
+    const query = `UPDATE user SET fname='${body.fname}',lname='${body.lname}',username='${body.username}',profile='${filename}' where u_id = ${userId}`;
+    dbcon.getConnection((err,con)=>{
+        if(err){
+            con.release();
+        return console.log(err);
+        }
+        con.query(query,[userId],(err,result)=>{
+            if(err){
+                con.release();
+            return console.log(err);
+            }
+            console.log("user data in edit:::",result);
+            res.status(200).json({ msg: 'user succesfully updated' })
+        })
+    })
+}
 
 
-module.exports = { userSignup, userLogin, home };
+module.exports = { userSignup, userLogin, home,userData,editData };
 

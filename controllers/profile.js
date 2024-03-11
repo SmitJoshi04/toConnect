@@ -67,7 +67,7 @@ const getUserPost = async function (req, res) {
                     con.query(`SELECT * FROM likes WHERE post_id=?`, [post_id], (err3, resultlike) => {
                         console.log("::::::::::::::::::::");
                         if (err3)
-                            return reject(err2);
+                            return reject(err3);
                         console.log('resultlike', resultlike);
                         resolve(resultlike)
 
