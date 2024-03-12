@@ -5,7 +5,7 @@ const { } = require('../utility/user')
 
 const getUserPost = async function (req, res) {
 
-    var body = req.body;
+   let userId = req.user.userId;
     var getPostArray = [];
     
     // const userId = req.user.userId
@@ -15,12 +15,12 @@ const getUserPost = async function (req, res) {
     await dbcon.getConnection((err, con) => {
         if (err)
             return console.error(err);
-        con.query(`SELECT u2.fname , u2.u_id , u2.lname ,p.*,f.status FROM (user u1, user u2, post p )
+        con.query(`SELECT u2.fname , u2.u_id , u2.lname,u2.username,u2.profile ,p.*,f.status FROM (user u1, user u2, post p )
         left join friend f on 
         (f.user1_id = u1.u_id AND f.user2_id= u2.u_id) OR (f.user2_id = u1.u_id AND f.user1_id = u2.u_id)
         WHERE  u1.city_id = u2.city_id
         AND (p.u_id = u2.u_id and p.u_id != u1.u_id)  
-        AND u1.u_id= ? `, [body.u_id], async (err, result) => {
+        AND u1.u_id= ? order by p.post_date desc`, [userId], async (err, result) => {
             if (err)
                 console.error(err);
             // res.send(result);

@@ -6,6 +6,6 @@ const router = express.Router();
 
 const {getUserPost} = require('../controllers/home');
 
-router.post('/',getUserPost) 
+router.post('/',verifyToken,getUserPost) 
 
 module.exports = router;
