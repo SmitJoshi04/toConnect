@@ -36,7 +36,7 @@ const getUserPost = async function (req, res) {
         // console.log("userid :: ", userId);
 
         await dbcon.getConnection((err, con) => {
-        con.query(`SELECT * FROM post WHERE u_id =?`, [user.userId], async (err, result) => {
+        con.query(`SELECT * FROM post WHERE u_id =15 order by post_date desc;`, [user.userId], async (err, result) => {
             if (err)
                 console.error(err);
             // res.send(result);
