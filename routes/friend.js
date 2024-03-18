@@ -4,8 +4,8 @@ const { verifyToken } = require('../middlewares/user')
 const{sendFriendReq, acceptFriendreq, rejectFriendReq, getFriendReq }= require('../controllers/friend')
 
 router.post('/', verifyToken, sendFriendReq)
-router.patch('/', verifyToken, acceptFriendreq)
-router.delete('/', verifyToken, rejectFriendReq)
-router.get('/', verifyToken, getFriendReq)
+router.post('/accept', verifyToken, acceptFriendreq)
+router.post('/reject', verifyToken, rejectFriendReq)
+router.post('/get', verifyToken, getFriendReq)
 
 module.exports = router;

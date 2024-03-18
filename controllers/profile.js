@@ -6,7 +6,6 @@ const getUserProfileData = async function (req,res){
     const query = `select * from user where u_id= ${user.userId}`
     await dbcon.getConnection((err, con) => {
         if (err) {
-            con.release();
             return res.send(err);
         }
         con.query(query, (err, result) => {

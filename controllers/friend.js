@@ -27,6 +27,7 @@ const acceptFriendreq = async function(req,res){
     const user2Id = req.user.userId;
 
 console.log("userId :::", user2Id )
+console.log("body :::", body);
     await dbcon.getConnection((err,con)=>{
         if(err)
         return console.error(err);
@@ -35,6 +36,7 @@ console.log("userId :::", user2Id )
                 con.release()
                 return res.send(err);
             }
+            console.log("result",result);
             res.send(result)
             con.release();
         } )
@@ -44,6 +46,8 @@ console.log("userId :::", user2Id )
 const rejectFriendReq = async function (req, res) {
     var body= req.body;
     const user2Id = req.user.userId
+    console.log("userId :::", user2Id )
+console.log("body :::", body);
 
     await dbcon.getConnection((err,con)=>{
         if(err)
@@ -66,7 +70,7 @@ const getFriendReq = async function (req, res) {
     await dbcon.getConnection((err,con)=>{
         if(err)
         console.error(err);
-        con.query(`SELECT user.username , user.u_id, friend.friendreq_time FROM user JOIN friend ON friend.user1_id = user.u_id  WHERE friend.user2_id =?` , [user2Id], (err,result)=>{
+        con.query(`SELECT user.username , user.profile, user.u_id, friend.friendreq_time FROM user JOIN friend ON friend.user1_id = user.u_id  WHERE friend.user2_id =? AND friend.status =?` , [user2Id, 'P'], (err,result)=>{
             if (err){
                 con.release()
                 return res.send(err);
