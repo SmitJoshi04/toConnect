@@ -83,12 +83,13 @@ const userLogin = async function (req, res) {
     }
     const user = {
         userId: userName[0].u_id,
+        username:userName[0].username
     }
     const jwtToken = await jwt.sign(user, secretKey)
     // res.send("login Successfully");
     console.log(jwtToken);
 
-    res.status(200).json({ msg: 'user valid', jwtToken: jwtToken, userId: user.userId });
+    res.status(200).json({ msg: 'user valid', jwtToken: jwtToken, userId: user.userId,username:user.username });
 }
 
 const home = function (req, res) {

@@ -10,13 +10,13 @@ const userPost = async function (req, res) {
     await dbcon.getConnection((err, con) => {
         if (err)
             return res.send(err)
-        con.query(`INSERT INTO post (u_id, post_text,photo_path) VALUES (${userId} , '${body.post_text}', '${file.filename}')`, (err, result) => {
+        con.query(`INSERT INTO post (u_id, post_text,photo_path) VALUES (${userId} , '${body.postText}', '${file.filename}')`, (err, result) => {
             if (err){
                 con.release()
                 return res.send(err);
             }
             console.log("result:::",result);
-            res.send(result)
+            res.json({result:result,msg:"post created successfully..."})
             con.release();
         })
 

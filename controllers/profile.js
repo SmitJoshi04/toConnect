@@ -132,11 +132,10 @@ const getUserFriend = async function (req, res) {
             con.release()
             return res.send(err);
         }
-        con.query(`SELECT user1_id FROM friend WHERE user2_id =? AND status =?`, [user.userId, 'A'], async (err, result) => {
+        con.query(`SELECT u.fname,u.lname,u.username,u.email,u.profile,u.u_id FROM friend f,user u WHERE ((f.user2_id =? OR f.user1_id=?) AND status =? AND (u.u_id = f.user1_id or u.u_id = f.user2_id)) AND u.u_id!= ?;`, [user.userId,user.userId, 'A',user.userId], async (err, result) => {
             if (err) {
                 console.error(err);
                 con.release();
-
             }
             console.log("result of no. of friends::", result);
             res.send(result);
