@@ -93,7 +93,7 @@ const getUserPost = async function (req, res) {
                 
                 getPostArray.push(result[i]);
                 console.log("getPostArray", getPostArray);
-
+ 
             }
             res.send(getPostArray);
 

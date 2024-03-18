@@ -139,7 +139,7 @@ const userLike = async function (req, res) {
                         con.release()
                         return res.send(err);
                     }
-                    console.log(result)
+                    console.log(result) 
                     console.log(" Raw Deleted Successfully")
                 })
             }

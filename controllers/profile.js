@@ -178,4 +178,4 @@ await dbcon.getConnection((err, con) => {
 }
 
 
-module.exports = { getUserPost, getUserFriend, getUserProfileData,editProfilePicture };
+module.exports = { getUserPost, getUserFriend, getUserProfileData,editProfilePicture };     
