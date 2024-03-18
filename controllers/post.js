@@ -141,6 +141,8 @@ const userLike = async function (req, res) {
                     }
                     console.log(result) 
                     console.log(" Raw Deleted Successfully")
+                    return res.send(result);
+                    
                 })
             }
             else {
